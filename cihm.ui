@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CIhm</class>
+ <widget class="QMainWindow" name="CIhm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>771</width>
+    <height>739</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Maquette PMV</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTableWidget" name="twListe">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>741</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="rowCount">
+     <number>20</number>
+    </property>
+    <property name="columnCount">
+     <number>6</number>
+    </property>
+    <row>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </row>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <row/>
+    <column>
+     <property name="text">
+      <string>Couloir 1</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Temps 1</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Vent 1</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Couloir 2</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Temps 2</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Vent 2</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QGroupBox" name="gbSession">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>301</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Gestion de la session</string>
+    </property>
+    <widget class="QPushButton" name="pbSS">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>111</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>START</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbFichier">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>70</y>
+       <width>111</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Télécharger</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>41</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nom : </string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leNomSession">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>30</y>
+       <width>241</width>
+       <height>32</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="gbOrdres">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>10</y>
+      <width>441</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Gestion d'une course</string>
+    </property>
+    <widget class="QPushButton" name="pbStopCourse">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>70</y>
+       <width>111</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP COURSE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbPartez">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>70</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Partez !</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbPret">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>70</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prêt</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbMarques">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>111</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>A vos marques</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>40</y>
+       <width>141</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Numéro de la course :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lNo">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>40</y>
+       <width>21</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>-1</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>40</y>
+       <width>151</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sélectionnez une ligne !</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbAvantCourse">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Avant course</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>771</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
