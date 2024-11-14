@@ -107,7 +107,7 @@
      <item row="1" column="0">
       <widget class="QLineEdit" name="leNomSession">
        <property name="text">
-        <string>NOM DE LA SESSION</string>
+        <string>NOM_SESSION</string>
        </property>
       </widget>
      </item>

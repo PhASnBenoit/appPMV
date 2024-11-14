@@ -43,7 +43,7 @@ CApp::CApp(QObject *parent) : QObject(parent)
         _zdc->setCourses(_courses);
     } else { // session non active
         // création d'une session
-        creerSession("Nouvelle session"); // Utilisé aussi par on_new_session()
+        creerSession("Session"+QDateTime::currentDateTime().toString("ddMMyyyyhhmm")); // Utilisé aussi par on_new_session()
     } // else session non active
 
     // -----------------------------------------------------------------

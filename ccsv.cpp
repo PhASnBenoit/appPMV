@@ -71,8 +71,13 @@ QString CCsv::chooseImportFile() //----- 2024
 
 QString CCsv::chooseExportFile()
 {
+    T_DATAS datas;
     QFileDialog myDialog;
-    QString path = myDialog.getSaveFileName(nullptr, tr("Save file"), "/home/pi/Documents/", tr("Text Editor(*.csv)")); // popup
+    CZdc zdc;
+    zdc.getDatas(datas);
+    QString filename = "/home/pi/Documents/"+QString(datas.paramSession.nom);
+
+    QString path = myDialog.getSaveFileName(nullptr, tr("Save file"), filename, tr("Text Editor(*.csv)")); // popup
     if (!path.isEmpty())
         return path;
     return "";
