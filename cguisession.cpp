@@ -40,7 +40,7 @@ CGuiSession::CGuiSession(QWidget *parent)
     ui->tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // création et remplissage des QlineEdits
-    for(int i = 0; i < 40; i++) {
+    for(int i = 0; i < (2*NB_COURSES); i++) {
         _lineEdits.append(new QLineEdit);
         _lineEdits.last()->setText(_coureurs.at(i));
         _lineEdits.last()->setReadOnly(true);
@@ -83,20 +83,6 @@ qDebug() << "CGuiSession::CGuiSession: Remplissage de la liste.";
 
     bzero(&_buttons, sizeof(T_BUTTONS));  // init donnée membre image des boutons
     _zdc->sauveButtons(_buttons); // synchro avec mem partagée
-
-/* Connects
-    connect(this, &CGuiSession::sig_runnersImport, _app, &CApp::on_runnersImport);// connect pour l'importation
-    connect(this, &CGuiSession::sig_runnersExport, _app, &CApp::on_runnersExport);// connect pour l'exportation
-    connect(ui->actionGetControl, &QAction::triggered, _app, &CApp::on_getControl);
-    connect(this, &CGuiSession::sig_ihmGetControl, _app, &CApp::on_getControl);
-    connect(_app, &CApp::sig_appRemoteGetControl, this, &CGuiSession::on_appRemoteGetControl);
-    connect(this, &CGuiSession::sig_toWorkerThread, _app, &CApp::on_workerThread); // Passerelle de démarrage du Thread
-    connect(ui->actionGetControl_2, &QAction::triggered, _app, &CApp::on_getControl);
-    // connect(sig_finCourse --> app) apres creation capp
-    connect(_app, &CApp::sig_endRun, this, &CGuiSession::on_stopRun);
-    connect(this, &CGuiSession::sig_finCourse, this, &CGuiSession::on_finCourse);
-*/
-
 }
 
 CGuiSession::~CGuiSession()
@@ -358,7 +344,7 @@ void CGuiSession::fillListe() {
     T_DATAS datas;
     _zdc->getDatas(datas);
 
-    for(int i=0 ; i<20 ; i++) {
+    for(int i=0 ; i<NB_COURSES ; i++) {
         _lineEdits.at(i*2)->setText(QString(datas.coureurs[i].noms[0]));
         _lineEdits.at(i*2+1)->setText(QString(datas.coureurs[i].noms[1]));
 
@@ -524,7 +510,7 @@ void CGuiSession::on_pbLeft_clicked()
 
     _noCourse--;
     if (_noCourse<1)
-        _noCourse=20;
+        _noCourse=NB_COURSES;
     // afficher les paramètres du coureur
     majAff1Course(_noCourse);
     emit sig_setNoCourse(_noCourse); // change noCourse dans CApp
@@ -540,7 +526,7 @@ void CGuiSession::on_pbRight_clicked()
     changeNomCoureursDansListe(_noCourse, ui->cbNom1->currentText(), ui->cbNom2->currentText());
 
     _noCourse++;
-    if (_noCourse>20)
+    if (_noCourse>NB_COURSES)
         _noCourse=1;
     // afficher les paramètres du coureur
     majAff1Course(_noCourse);

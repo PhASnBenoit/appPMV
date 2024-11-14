@@ -6,6 +6,8 @@
 #include <QStringList>
 #include <string.h>
 
+#define NB_COURSES 40
+
 typedef enum {
     DEPART_LANCE=1,  // 1 seul coureur
     DEPART_ARRETE      // 2 coureurs en //
@@ -30,10 +32,10 @@ typedef struct s_buttons { //--- 2024
 typedef struct s_paramSession { //----- 2024
     bool active;
     char nom[50];
-    char dateDeb[10];
-    char dateFin[10];
-    char heureDeb[10];
-    char heureFin[10];
+    char dateDeb[15];
+    char dateFin[15];
+    char heureDeb[15];
+    char heureFin[15];
     T_TYPE_COURSE typeCourse;
 } T_PARAMSESSION;
 
@@ -56,7 +58,7 @@ typedef struct s_data { //--- 2024
     char chaine[2][50];
     float ventRT;  // vitesse du vent en km/h en temps réel
     int dirVentRT; // direction du vent en ° en temps reel
-    T_2COUREURS coureurs[20];
+    T_2COUREURS coureurs[NB_COURSES];
 } T_DATAS;
 
 

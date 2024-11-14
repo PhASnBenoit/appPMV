@@ -4,7 +4,6 @@ using namespace std;
 
 CBdd::CBdd(QObject *parent): QObject(parent)  // --------- 2024
 {
-//    _sqlPath = "/home/philippe/devQt/pmv_bdd/PMVBdd.sqlite";
     _sqlPath = "/home/pi/devQt/PMVBdd.sqlite";
     PMVBdd = QSqlDatabase::addDatabase("QSQLITE");
     PMVBdd.setDatabaseName(_sqlPath);
@@ -87,7 +86,7 @@ void CBdd::setListeCoureurs(QStringList &liste) { //---- 2024
     qDebug() << "Effacement table Courses et ajout de : " << liste;
 
     // La liste contient 40 noms
-    for(int i=0; i<20 ; i++) {
+    for(int i=0; i<NB_COURSES ; i++) {
         _sqlQuery->prepare("INSERT INTO Courses VALUES (:idc, :ids, :Nom1, :Nom2, '0', '0', '0', '0', '0', '0');");
         _sqlQuery->bindValue(":Nom1", liste.at(2*i));
         _sqlQuery->bindValue(":Nom2", liste.at(2*i+1));
@@ -107,7 +106,7 @@ void CBdd::getCourses(QList<T_2COUREURS> &courses) //---- 2024
     _sqlQuery->exec();
     qDebug() << "CBdd::getListeCoureurs: " << _sqlQuery->lastError().text();
 
-    for(int i=0 ; i<20 ; i++){
+    for(int i=0 ; i<NB_COURSES ; i++){
         if (!_sqlQuery->next()) {
         } else {
             strcpy(course.noms[0], _sqlQuery->value(2).toString().toStdString().c_str());

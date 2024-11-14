@@ -51,13 +51,13 @@ CApp::CApp(QObject *parent) : QObject(parent)
 
     // tout est initialisé dans BDD et ZDC, la session peut commmencer
     // lancement du serveur TCP pour la tablette
-    _serv = new CServeur(_bdd);
+/*    _serv = new CServeur(_bdd);
     // Connexion des signaux de contrôle de la tablette
     connect(this, &CApp::sig_srvGetControl, _serv, &CServeur::on_srvGetControl);
     connect(_serv, &CServeur::sig_srvRemoteGetControl, this, &CApp::on_srvRemoteGetControl);
     connect(_serv, &CServeur::sig_newBtnStateFromTablette, _uiSession, &CGuiSession::on_newBtnStateFromTablette);
     connect(_uiSession, &CGuiSession::sig_newBtnStateToTablette, _serv, &CServeur::on_remoteNewBtnToTablette);
-
+*/
     // Initialisation de la signalisation worker thread
     _thSign = new QThread();
     _sign = new CSignalisation();
@@ -90,7 +90,7 @@ CApp::~CApp()
     _thSign->quit();
     _thSign->wait();
     delete _giroAne;
-    delete _serv;
+//    delete _serv;
 
     delete _csv;
     delete _bdd;
@@ -106,7 +106,7 @@ qint64 CApp::calculerDeltaT(QDateTime t1, QDateTime t2) //-- 2024
 float CApp::calculerVitesse(float tms) //-- 2024
 {
     float vitesse;
-    vitesse = (50.0/(tms/1000))*3.6;  // km/h
+    vitesse = ((_typeCourse==DEPART_ARRETE?50.0:10.0)/(tms/1000))*3.6;  // km/h
     return vitesse;
 }
 
@@ -139,7 +139,7 @@ void CApp::creerSession(QString nomSession) //-- 2024
     } // if chemin pas vide
 
     // nom par défaut des coureurs restant
-    for (int i=coureurs.size() ; i<40 ; i++) { // termine le fichier au cas ou !
+    for (int i=coureurs.size() ; i<(2*NB_COURSES) ; i++) { // termine le fichier au cas ou !
         coureurs.append("Coureur "+QString::number(i+1));
         if (_typeCourse==DEPART_LANCE) {
             coureurs.append("noname");
@@ -178,7 +178,7 @@ void CApp::setCoureursInCourses(QStringList coureurs)
 {
     T_2COUREURS cour2;
     memset(&cour2, 0, sizeof(T_2COUREURS));
-    for(int i=0 ; i<20 ; i++) {
+    for(int i=0 ; i<NB_COURSES ; i++) {
         _courses.append(cour2);
         sprintf(_courses[i].noms[0],"%s", (char *)coureurs.at(2*i).toStdString().c_str());
         strcpy(_courses[i].noms[1], coureurs.at(2*i+1).toStdString().c_str());
@@ -298,6 +298,3 @@ void CApp::on_endSession() //-- 2024
     _paramSession.active = false;
     _zdc->setParamSession(_paramSession);
 }
-
-
-

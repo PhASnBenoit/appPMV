@@ -65,7 +65,7 @@ QString CZdc::getNomCoureur(int noCourse, int pos)
 void CZdc::setListeCoureurs(QList<T_2COUREURS> courses) //--- 2024
 {
     lock();
-        for(int i=0 ; i<20 ; i++) {
+        for(int i=0 ; i<NB_COURSES ; i++) {
             memcpy(&_datas->coureurs[i], &courses.at(i), sizeof(T_2COUREURS));
         } // for
     unlock();
@@ -75,7 +75,7 @@ void CZdc::getListeCoureurs(QStringList &coureurs) //--- 2024
 {
     coureurs.clear();
     lock();
-        for(int i=0 ; i<20 ; i++) {
+        for(int i=0 ; i<NB_COURSES ; i++) {
             coureurs.append(_datas->coureurs[i].noms[0]);
             coureurs.append(_datas->coureurs[i].noms[1]);
         } // for
@@ -265,7 +265,7 @@ void CZdc::setTypeCourse(T_TYPE_COURSE tc)
 void CZdc::setCourses(QList<T_2COUREURS> courses)
 {
     lock();
-    for(int i=0 ; i<20 ; i++) {
+    for(int i=0 ; i<NB_COURSES ; i++) {
         memcpy(&_datas->coureurs[i], &courses.at(i), sizeof(T_2COUREURS));
     }
     unlock();

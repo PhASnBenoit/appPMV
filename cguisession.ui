@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PMV 4.01 by PhA</string>
+   <string>PMV 4.2 by PhA</string>
   </property>
   <property name="windowIcon">
    <iconset theme="applications-utilities">
@@ -123,7 +123,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -679,6 +679,106 @@
       <row>
        <property name="text">
         <string>20</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>21</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>22</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>23</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>24</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>25</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>26</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>27</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>28</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>29</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>30</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>31</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>32</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>33</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>34</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>35</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>36</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>37</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>38</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>39</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>40</string>
        </property>
       </row>
       <column>
@@ -1696,6 +1796,7 @@
     <property name="font">
      <font>
       <pointsize>11</pointsize>
+      <weight>75</weight>
       <italic>true</italic>
       <bold>true</bold>
      </font>
@@ -1711,7 +1812,7 @@
      <x>0</x>
      <y>0</y>
      <width>792</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSyst_me">
