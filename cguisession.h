@@ -77,6 +77,7 @@ private:
 
     void idPage();
     void mdpPage();
+    QString convAngleToPointCardinal(int angleDegrees);
     int cpt1;
     int cpt2;
     int _noCourse; //--- 2024

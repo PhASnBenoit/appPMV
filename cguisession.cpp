@@ -178,9 +178,9 @@ void CGuiSession::on_pbPret_clicked()
     } // if
 
     ui->pbPreparation->setDisabled(true);
-    ui->pbAvm->setDisabled(true);
+    ui->pbAvm->setEnabled(true);
     ui->pbPret->setDisabled(true);
-    ui->pbPartez->setDisabled(false);
+    ui->pbPartez->setEnabled(true);
     ui->pbArret->setDisabled(true);
 }
 
@@ -395,7 +395,7 @@ void CGuiSession::on_afficherCourse(int noCourse)
 
     // si les deux coureurs sont arrivés
     if (_zdc->getCoureurArrived(noCourse, 0) && _zdc->getCoureurArrived(noCourse, 1)) {
-//        ui->pbPreparation->setEnabled(true);
+        ui->pbPreparation->setEnabled(true);
         ui->pbAvm->setDisabled(true);
         ui->pbPret->setDisabled(true);
         ui->pbPartez->setDisabled(true);
@@ -579,8 +579,8 @@ void CGuiSession::majAff1Course(int noCourse) {
     ui->leVit2->setText(conversionVitesseCoureurToString(datas.coureurs[noCourse-1].vitesse[1]));
     ui->leVent1->setText(QString::number(datas.coureurs[noCourse-1].vent,'f', 0)+" km/h");
     ui->leVent2->setText(QString::number(datas.coureurs[noCourse-1].vent,'f', 0)+" km/h");
-    ui->leDir1->setText(QString::number(datas.coureurs[noCourse-1].dirVent)+"°");
-    ui->leDir2->setText(QString::number(datas.coureurs[noCourse-1].dirVent)+"°");
+    ui->leDir1->setText(convAngleToPointCardinal(datas.coureurs[noCourse-1].dirVent));
+    ui->leDir2->setText(convAngleToPointCardinal(datas.coureurs[noCourse-1].dirVent));
 }
 
 void CGuiSession::on_timeout()
@@ -589,7 +589,7 @@ void CGuiSession::on_timeout()
     ui->leVent->setText(QString::number(vitVentRT,'f',0)+" km/h");
 
     int dirVentRT = _zdc->getDirectionVentRT();
-    ui->leDir->setText(QString::number(dirVentRT)+" °");
+    ui->leDir->setText(convAngleToPointCardinal(dirVentRT));
 }
 
 void CGuiSession::on_bloqueCoureur()
@@ -602,6 +602,21 @@ void CGuiSession::on_debloqueCoureur()
 {
     ui->pbRight->setEnabled(true);
     ui->pbLeft->setEnabled(true);
+}
+
+QString CGuiSession::convAngleToPointCardinal(int angleDegrees)
+{
+    // Déterminer le point cardinal
+    if (angleDegrees >= 337.5 || angleDegrees < 22.5) return "Nord";
+    if (angleDegrees >= 22.5 && angleDegrees < 67.5) return "Nord-Est";
+    if (angleDegrees >= 67.5 && angleDegrees < 112.5) return "Est";
+    if (angleDegrees >= 112.5 && angleDegrees < 157.5) return "Sud-Est";
+    if (angleDegrees >= 157.5 && angleDegrees < 202.5) return "Sud";
+    if (angleDegrees >= 202.5 && angleDegrees < 247.5) return "Sud-Ouest";
+    if (angleDegrees >= 247.5 && angleDegrees < 292.5) return "Ouest";
+    if (angleDegrees >= 292.5 && angleDegrees < 337.5) return "Nord-Ouest";
+
+    return "Inconnu"; // Par sécurité, mais on ne devrait jamais atteindre ce cas
 }
 
 

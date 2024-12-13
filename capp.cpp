@@ -163,6 +163,7 @@ void CApp::creerUiSession() { //-- 2024
     // lance l'IHM de session sans bloquer CApp
     _uiSession = new CGuiSession(nullptr);
     //connect(_uiSession, &CGuiSession::destroyed, this, &CApp::on_exit);
+    //connect(_uiSession, &CGuiSession::sig_toWorkerThread, _sign, &CSignalisation::on_goTravail);
     connect(_uiSession, &CGuiSession::sig_timerStart, this, &CApp::on_departCourse);
     connect(_uiSession, &CGuiSession::sig_setNoCourse, this, &CApp::on_setNoCourse);
     connect(_uiSession, &CGuiSession::sig_toWorkerThread, _uiSession, &CGuiSession::on_bloqueCoureur);
@@ -220,6 +221,7 @@ void CApp::on_coureurArrived(int noCapteur, QDateTime t)
 {
     float tms, vit;
     int pos=0;
+
     // selon le numéro du capteur
     switch(noCapteur) {
     case 1: // capteur 1
@@ -249,16 +251,17 @@ void CApp::on_coureurArrived(int noCapteur, QDateTime t)
         _zdc->setCoureurArrived(_noCourse, pos, true);
         if (_typeCourse == DEPART_ARRETE) {
             tms = calculerDeltaT(_td, _t2);
-            _zdc->setTempsCoureur(_noCourse, pos, tms);
         } else { // départ lancé
             pos=0;
             tms = calculerDeltaT(_t1, _t2);
-            _zdc->setTempsCoureur(_noCourse, pos, tms);
         } // else
+        _zdc->setTempsCoureur(_noCourse, pos, tms);
         vit = calculerVitesse(tms);
         _zdc->setVitesseCoureur(_noCourse, pos, vit);
         float vitVent = _zdc->getVitesseVentRT();
         _zdc->setVitesseVent(_noCourse, vitVent, false);
+        int dirVent = _zdc->getDirectionVentRT();
+        _zdc->setDirectionVent(_noCourse, dirVent);
         emit sig_majCourse(_noCourse); // demande de mise à jour de l'affichage
         break;
     } // sw
@@ -286,7 +289,10 @@ void CApp::on_setNoCourse(int no) //-- 2024
 
 void CApp::on_newSession(QString nomSession) //-- 2024
 {
+    //disconnect(_uiSession, &CGuiSession::sig_toWorkerThread, _sign, &CSignalisation::on_goTravail);
     _uiSession->close();
+    delete _uiSession;
+// date
     creerSession(nomSession);
     creerUiSession();
 }
