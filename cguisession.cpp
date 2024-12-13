@@ -125,7 +125,7 @@ void CGuiSession::on_pbPreparation_clicked()
     if (_zdc->getControleLocal()) {  // pourrait être la cause d'un renvoi de trame, idem pour les autres boutons.
         T_BUTTONS buttons;
         _zdc->getButtons(buttons);
-        bzero(&buttons, sizeof(T_BUTTONS));
+        memset(&buttons, 0, sizeof(T_BUTTONS));
         buttons.btnPreparation = 1;
         _zdc->setButtons(buttons);
         emit sig_newBtnStateToTablette(buttons);
@@ -135,7 +135,7 @@ void CGuiSession::on_pbPreparation_clicked()
     ui->pbAvm->setDisabled(false);
     ui->pbPret->setDisabled(true);
     ui->pbPartez->setDisabled(true);
-    ui->pbArret->setEnabled(true);
+    ui->pbArret->setEnabled(false);
 }
 
 void CGuiSession::on_pbAvm_clicked()
@@ -158,7 +158,7 @@ void CGuiSession::on_pbAvm_clicked()
     ui->pbAvm->setDisabled(true);
     ui->pbPret->setDisabled(false);
     ui->pbPartez->setDisabled(true);
-    ui->pbArret->setEnabled(true);
+    ui->pbArret->setEnabled(false);
 }
 
 void CGuiSession::on_pbPret_clicked()
@@ -408,18 +408,19 @@ void CGuiSession::on_afficherCourse(int noCourse)
 
 QString CGuiSession::conversionTempsCoureurToMSCString(int t)
 {
-    int deltaTms, tmn, ts, tms;
+    int deltaTms, ts, tms;
+    //int tmn;
     QString temps="";
 
     deltaTms = t;
-    tmn = deltaTms / 60000;
-    deltaTms -= tmn*60000;
+    //tmn = deltaTms / 60000;
+    //deltaTms -= tmn*60000;
     ts = deltaTms/1000;
     deltaTms -= ts*1000;
     tms = deltaTms; // ce qui reste en ms
-    temps = QString::number(tmn)+":";
-    temps += QString::number(ts)+",";
-    temps += QString::number(tms)+"mn";
+    //temps = QString::number(tmn)+":";
+    temps = QString::number(ts)+",";
+    temps += QString::number(tms)+" s";
     return temps;
 }
 

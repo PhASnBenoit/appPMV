@@ -182,7 +182,7 @@ void CApp::setCoureursInCourses(QStringList coureurs)
     for(int i=0 ; i<NB_COURSES ; i++) {
         _courses.append(cour2);
         sprintf(_courses[i].noms[0],"%s", (char *)coureurs.at(2*i).toStdString().c_str());
-        strcpy(_courses[i].noms[1], coureurs.at(2*i+1).toStdString().c_str());
+        memcpy(_courses[i].noms[1], coureurs.at(2*i+1).toStdString().c_str(), 49);
     } // for
 }
 
