@@ -84,10 +84,10 @@ qDebug() << "CGuiSession::CGuiSession: Remplissage de la liste.";
         ui->pbArret ->setDisabled(true);
         break;
     case DEPART_LANCE:
-        ui->pbPreparation->setEnabled(false);
+        ui->pbPreparation->setEnabled(true);
         ui->pbAvm->setEnabled(false);
         ui->pbPret->setEnabled(false);
-        ui->pbPartez->setEnabled(true);
+        ui->pbPartez->setEnabled(false);
         ui->pbArret ->setEnabled(false);
         break;
     }
@@ -131,11 +131,21 @@ void CGuiSession::on_pbPreparation_clicked()
         emit sig_newBtnStateToTablette(buttons);
     } // if
 
-    ui->pbPreparation->setDisabled(true);
-    ui->pbAvm->setDisabled(false);
-    ui->pbPret->setDisabled(true);
-    ui->pbPartez->setDisabled(true);
-    ui->pbArret->setEnabled(false);
+    switch(_typeCourse) {
+    case DEPART_ARRETE:
+        ui->pbPreparation->setEnabled(false);
+        ui->pbAvm->setEnabled(true);
+        ui->pbPret->setEnabled(false);
+        ui->pbPartez->setEnabled(false);
+        ui->pbArret->setEnabled(false);
+        break;
+    case DEPART_LANCE:
+        ui->pbPreparation->setEnabled(false);
+        ui->pbAvm->setEnabled(false);
+        ui->pbPartez->setEnabled(true);
+        ui->pbArret->setEnabled(false);
+        break;
+    } // sw
 }
 
 void CGuiSession::on_pbAvm_clicked()
@@ -211,7 +221,7 @@ void CGuiSession::on_pbPartez_clicked()
     case DEPART_LANCE:
         ui->pbPartez->setEnabled(false);
         ui->pbArret->setEnabled(true);
-        emit sig_toWorkerThread();
+        //emit sig_toWorkerThread();
         break;
     } //sw
 
@@ -251,7 +261,8 @@ void CGuiSession::on_pbArret_clicked()
         ui->pbArret->setDisabled(true);
         break;
     case DEPART_LANCE:
-        ui->pbPartez->setEnabled(true);
+        ui->pbPreparation->setEnabled(true);
+        ui->pbPartez->setEnabled(false);
         ui->pbArret ->setEnabled(false);
         break;
     } //sw
