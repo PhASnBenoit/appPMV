@@ -32,14 +32,12 @@ SOURCES += \
     cguisession.cpp \
     cguitypecourse.cpp \
         main.cpp \
-    cserveur.cpp \
     csignalisation.cpp \
     czdc.cpp \
     capp.cpp \
     cbdd.cpp \
     ccapteurpassage.cpp \
     ccsv.cpp \
-    cgererclient.cpp \
     biblis/cgpio.cpp \
     biblis/ci2c.cpp
 
@@ -49,14 +47,12 @@ HEADERS += \
     cguilogin.h \
     cguisession.h \
     cguitypecourse.h \
-    cserveur.h \
     csignalisation.h \
     czdc.h \
     capp.h \
     cbdd.h \
     ccapteurpassage.h \
     ccsv.h \
-    cgererclient.h \
     biblis/cgpio.h \
     biblis/ci2c.h
 

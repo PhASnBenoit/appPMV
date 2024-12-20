@@ -11,66 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PMV 4.5 by PhA</string>
+   <string>PMV 4.6 by PhA</string>
   </property>
   <property name="windowIcon">
    <iconset theme="applications-utilities">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>411</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="lGestionSession">
-       <property name="text">
-        <string>GESTION SESSION</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="leNomSession">
-       <property name="text">
-        <string>NOM_SESSION</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3" rowspan="2">
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="pbControl">
-       <property name="text">
-        <string>Prendre le contrôle</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pbStart">
-       <property name="text">
-        <string>START</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -1852,6 +1799,48 @@
      <string>ARRET</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="leNomSession">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>30</y>
+      <width>291</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NOM_SESSION</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbStart">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>101</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DEMARRER</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lGestionSession">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>400</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>GESTION SESSION</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1878,15 +1867,8 @@
     <addaction name="actionImport_CSV"/>
     <addaction name="actionExport_CSV_2"/>
    </widget>
-   <widget class="QMenu" name="menugetControl">
-    <property name="title">
-     <string>getControl</string>
-    </property>
-    <addaction name="actionGetControl_2"/>
-   </widget>
    <addaction name="menuSyst_me"/>
    <addaction name="menuCSV"/>
-   <addaction name="menugetControl"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionRedemarrage">

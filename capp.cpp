@@ -10,6 +10,7 @@ CApp::CApp(QObject *parent) : QObject(parent)
     // authentification
     QMessageBox msgBox;
     QString codePIN;
+    int nbEssais = 3;
     do {
         _uiLogin = new CGuiLogin(nullptr, &codePIN);
         _uiLogin->exec(); //---------------------------------- IHM
@@ -21,7 +22,10 @@ CApp::CApp(QObject *parent) : QObject(parent)
             msgBox.exec();
         } else
             break;
-    } while(1);  // prévoir nombre d'essai limite
+        nbEssais--;
+    } while(nbEssais);  // prévoir nombre d'essai limite
+    if (!nbEssais)
+        on_exit();
 
     // LE code PIN est bon
     bool res = _bdd->getParamSession(_paramSession);
@@ -124,9 +128,9 @@ void CApp::creerSession(QString nomSession) //-- 2024
     // constituer les paramSession et les sauver dans BDD et ZDC
     _paramSession.active = true;
     _paramSession.typeCourse = _typeCourse;
-    strcpy(_paramSession.dateDeb, QDate::currentDate().toString("dd-MM-yy").toStdString().c_str());
-    strcpy(_paramSession.heureDeb, QTime::currentTime().toString().toStdString().c_str());
-    strcpy(_paramSession.nom, nomSession.toStdString().c_str());
+    memcpy(_paramSession.dateDeb, QDate::currentDate().toString("dd-MM-yy").toStdString().c_str(),sizeof(_paramSession.dateDeb));
+    memcpy(_paramSession.heureDeb, QTime::currentTime().toString().toStdString().c_str(), sizeof(_paramSession.heureDeb));
+    memcpy(_paramSession.nom, nomSession.toStdString().c_str(), sizeof(_paramSession.nom));
     _bdd->setParamSession(_paramSession);
     _zdc->setParamSession(_paramSession);
 

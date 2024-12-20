@@ -33,7 +33,7 @@ CGuiSession::CGuiSession(QWidget *parent)
     ui->leNomSession->setDisabled(true);
     majAff1Course(_noCourse);
 
-    ui->pbStart->setText("STOP");
+    ui->pbStart->setText("FERMER");
 
     /* Tableau de valeurs (en responsive)+ ComboBox des coureurs après import CSV */
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -74,8 +74,8 @@ qDebug() << "CGuiSession::CGuiSession: Remplissage de la liste.";
     }// for
 
     /* Etat des boutons au démarrage */
-    ui->pbControl->setEnabled(false);
-    ui->pbControl->setVisible(false);
+    //ui->pbControl->setEnabled(false);
+    //ui->pbControl->setVisible(false);
     switch(_typeCourse) {
     case DEPART_ARRETE:
         ui->pbAvm->setDisabled(true);
@@ -93,7 +93,7 @@ qDebug() << "CGuiSession::CGuiSession: Remplissage de la liste.";
     }
 
 
-    bzero(&_buttons, sizeof(T_BUTTONS));  // init donnée membre image des boutons
+    memset(&_buttons, 0, sizeof(T_BUTTONS));  // init donnée membre image des boutons
     _zdc->sauveButtons(_buttons); // synchro avec mem partagée
 }
 
@@ -137,13 +137,13 @@ void CGuiSession::on_pbPreparation_clicked()
         ui->pbAvm->setEnabled(true);
         ui->pbPret->setEnabled(false);
         ui->pbPartez->setEnabled(false);
-        ui->pbArret->setEnabled(false);
+        ui->pbArret->setEnabled(true);
         break;
     case DEPART_LANCE:
         ui->pbPreparation->setEnabled(false);
         ui->pbAvm->setEnabled(false);
         ui->pbPartez->setEnabled(true);
-        ui->pbArret->setEnabled(false);
+        ui->pbArret->setEnabled(true);
         break;
     } // sw
 }
@@ -164,11 +164,11 @@ void CGuiSession::on_pbAvm_clicked()
         emit sig_newBtnStateToTablette(buttons);
     } // if
 
-    ui->pbPreparation->setDisabled(false);
-    ui->pbAvm->setDisabled(true);
-    ui->pbPret->setDisabled(false);
-    ui->pbPartez->setDisabled(true);
-    ui->pbArret->setEnabled(false);
+    ui->pbPreparation->setEnabled(true);
+    ui->pbAvm->setEnabled(false);
+    ui->pbPret->setEnabled(true);
+    ui->pbPartez->setEnabled(false);
+    ui->pbArret->setEnabled(true);
 }
 
 void CGuiSession::on_pbPret_clicked()
@@ -181,17 +181,17 @@ void CGuiSession::on_pbPret_clicked()
     if (_zdc->getControleLocal()) {
         T_BUTTONS buttons;
         _zdc->getButtons(buttons);
-        bzero(&buttons, sizeof(T_BUTTONS));
+        memset(&buttons, 0, sizeof(T_BUTTONS));
         buttons.btnReady = 1;
         _zdc->setButtons(buttons);
         emit sig_newBtnStateToTablette(buttons);
     } // if
 
-    ui->pbPreparation->setDisabled(true);
+    ui->pbPreparation->setEnabled(false);
     ui->pbAvm->setEnabled(true);
-    ui->pbPret->setDisabled(true);
+    ui->pbPret->setEnabled(false);
     ui->pbPartez->setEnabled(true);
-    ui->pbArret->setDisabled(true);
+    ui->pbArret->setEnabled(true);
 }
 
 void CGuiSession::on_pbPartez_clicked()
@@ -205,18 +205,18 @@ void CGuiSession::on_pbPartez_clicked()
     if (_zdc->getControleLocal()) {
         T_BUTTONS buttons;
         _zdc->getButtons(buttons);
-        bzero(&buttons, sizeof(T_BUTTONS));
+        memset(&buttons, 0, sizeof(T_BUTTONS));
         buttons.btnGo = 1;
         _zdc->setButtons(buttons);
         emit sig_newBtnStateToTablette(buttons);
     } // if
     switch(_typeCourse) {
     case DEPART_ARRETE:
-        ui->pbPreparation->setDisabled(true);
-        ui->pbAvm->setDisabled(true);
-        ui->pbPret->setDisabled(true);
-        ui->pbPartez->setDisabled(true);
-        ui->pbArret->setDisabled(false);
+        ui->pbPreparation->setEnabled(false);
+        ui->pbAvm->setEnabled(false);
+        ui->pbPret->setEnabled(false);
+        ui->pbPartez->setEnabled(false);
+        ui->pbArret->setEnabled(true);
         break;
     case DEPART_LANCE:
         ui->pbPartez->setEnabled(false);
@@ -232,50 +232,49 @@ void CGuiSession::on_pbArret_clicked()
 {
     T_DATAS datas;
     QMessageBox msgBox;
-    _zdc->getDatas(datas);
-    datas.activeSignalisation = false;
-    datas.modeDeFonctionnement = ETEINT;
-    _zdc->sauveDatas(datas);
     if (_zdc->getControleLocal()) {
         msgBox.setText("Voulez-vous arrêter la course ?");
-        msgBox.setInformativeText("Sans attendre la détection de l'arrivéee ?");
+        msgBox.setInformativeText("Sans attendre la détection de l'arrivée ?");
         msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
         msgBox.setDefaultButton(QMessageBox::No);
         int reponse = msgBox.exec();
         if(reponse == QMessageBox::Yes)
         {
+            _zdc->getDatas(datas);
+            datas.activeSignalisation = false;
+            datas.modeDeFonctionnement = ETEINT;
+            _zdc->sauveDatas(datas);
             T_BUTTONS buttons;
             _zdc->getButtons(buttons);
-            bzero(&buttons, sizeof(T_BUTTONS));
+            memset(&buttons, 0, sizeof(T_BUTTONS));
             buttons.btnArret = 1;
             _zdc->setButtons(buttons);
             emit sig_newBtnStateToTablette(buttons);
+            switch(_typeCourse) {
+            case DEPART_ARRETE:
+                ui->pbPreparation->setEnabled(true);
+                ui->pbAvm->setEnabled(false);
+                ui->pbPret->setEnabled(false);
+                ui->pbPartez->setEnabled(false);
+                ui->pbArret->setEnabled(false);
+                break;
+            case DEPART_LANCE:
+                ui->pbPreparation->setEnabled(true);
+                ui->pbPartez->setEnabled(false);
+                ui->pbArret ->setEnabled(false);
+                break;
+            } //sw
+            //on_stopRun();// Slot pour la fin de chaque course
+            emit sig_finCourse(); // autorise le changement de coureur
         } // if yes
     } // if
-    switch(_typeCourse) {
-    case DEPART_ARRETE:
-        ui->pbPreparation->setDisabled(false);
-        ui->pbAvm->setDisabled(true);
-        ui->pbPret->setDisabled(true);
-        ui->pbPartez->setDisabled(true);
-        ui->pbArret->setDisabled(true);
-        break;
-    case DEPART_LANCE:
-        ui->pbPreparation->setEnabled(true);
-        ui->pbPartez->setEnabled(false);
-        ui->pbArret ->setEnabled(false);
-        break;
-    } //sw
-
-    //on_stopRun();// Slot pour la fin de chaque course
-    emit sig_finCourse(); // autorise le changement de coureur
 }
 
 // CHANGEMENT DE SESSION
 void CGuiSession::on_pbStart_clicked()
 {
     QMessageBox msgBox;
-    if(ui->pbStart->text()=="START") {
+    if(ui->pbStart->text()=="DEMARRER") {
             msgBox.setText("Voulez-vous lancer une nouvelle session?");
             msgBox.setInformativeText("N'oubliez pas de donner un nom à la session.");
             msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
@@ -284,10 +283,11 @@ void CGuiSession::on_pbStart_clicked()
             if(reponse == QMessageBox::Yes)
             {
                 ui->lGestionSession->setText("GESTION SESSION : EN COURS !");
-                ui->pbStart->setText("STOP");
+                ui->pbStart->setText("FERMER");
                 if (_typeCourse == DEPART_ARRETE)
                     ui->pbPreparation->setEnabled(true);
-                emit sig_newSession(ui->leNomSession->text()); // vers CApp
+                QDateTime dt = QDateTime::currentDateTime();
+                emit sig_newSession("Session_"+dt.toString("dd-MM-yyyy_hh:mm:ss")); // vers CApp
             } // if yes
     } else {
         msgBox.setText("Voulez-vous arrêter la session en cours?");
@@ -297,7 +297,7 @@ void CGuiSession::on_pbStart_clicked()
         int reponse = msgBox.exec();
         if(reponse == QMessageBox::Yes)
         {
-            ui->pbStart->setText("START");
+            ui->pbStart->setText("DEMARRER");
             ui->lGestionSession->setText("GESTION SESSION : FERMEE !");
             ui->lTypeCourse->setText("Session fermée");
             ui->gbCourses->setEnabled(false);
@@ -396,7 +396,7 @@ void CGuiSession::fillListe() {
         ui->tableWidget->setItem(i, 5, new QTableWidgetItem(conversionVitesseCoureurToString(datas.coureurs[i].vitesse[1]))); // vitesse2
 
         ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString::number(datas.coureurs[i].vent,'f',0)+" km/h")); // vent
-        ui->tableWidget->setItem(i, 7, new QTableWidgetItem(QString::number(datas.coureurs[i].dirVent)+" °")); // dir
+        ui->tableWidget->setItem(i, 7, new QTableWidgetItem(convAngleToPointCardinal(datas.coureurs[i].dirVent))); // dir
     } // for
 }
 
@@ -467,8 +467,8 @@ void CGuiSession::on_appRemoteGetControl()
     ui->pbPartez->setDisabled(true);
     ui->pbArret->setDisabled(true);
 
-    ui->pbControl->setVisible(true);
-    ui->pbControl->setDisabled(false);
+    //ui->pbControl->setVisible(true);
+    //ui->pbControl->setDisabled(false);
 }
 
 void CGuiSession::on_newBtnStateFromTablette(T_BUTTONS buttons) //-- 2024
