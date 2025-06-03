@@ -86,7 +86,7 @@ CApp::CApp(QObject *parent) : QObject(parent)
     _capteurPassage1 = new CCapteurPassage(nullptr, 17, 1);
     _capteurPassage2 = new CCapteurPassage(nullptr, 27, 2);
     // les connects sont au démarrage de la course
-}
+} // constructeur CApp
 
 CApp::~CApp()
 {
@@ -118,6 +118,11 @@ void CApp::creerSession(QString nomSession) //-- 2024
 {
    // initialisation de l'application pour une nouvelle session de course
     // vider la BDD
+    T_2COUREURS coureur;
+    memset(&coureur, 0, sizeof(T_2COUREURS));
+    for (int i= NB_COURSES ; i>0 ; i--)
+        _bdd->sauveCourse(i, coureur);
+
     // Choix du type de courses
     _typeCourse=DEPART_ARRETE;  // par défaut 2 coureurs
     _uiTypeCourse = new CGuiTypeCourse(nullptr, &_typeCourse);
@@ -293,10 +298,9 @@ void CApp::on_setNoCourse(int no) //-- 2024
 
 void CApp::on_newSession(QString nomSession) //-- 2024
 {
-    //disconnect(_uiSession, &CGuiSession::sig_toWorkerThread, _sign, &CSignalisation::on_goTravail);
+    disconnect(_uiSession, &CGuiSession::sig_toWorkerThread, _sign, &CSignalisation::on_goTravail);
     _uiSession->close();
     delete _uiSession;
-// date
     creerSession(nomSession);
     creerUiSession();
 }

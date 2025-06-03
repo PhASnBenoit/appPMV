@@ -31,7 +31,9 @@ CGuiSession::CGuiSession(QWidget *parent)
     ui->lGestionSession->setText("GESTION SESSION : EN COURS !");
     ui->leNomSession->setText(QString(_paramSession.nom));
     ui->leNomSession->setDisabled(true);
-    majAff1Course(_noCourse);
+    // init affichage IHM
+    for (int i= NB_COURSES ; i>0 ; i--)
+        majAff1Course(i);
 
     ui->pbStart->setText("FERMER");
 
@@ -74,24 +76,11 @@ qDebug() << "CGuiSession::CGuiSession: Remplissage de la liste.";
     }// for
 
     /* Etat des boutons au démarrage */
-    //ui->pbControl->setEnabled(false);
-    //ui->pbControl->setVisible(false);
-    switch(_typeCourse) {
-    case DEPART_ARRETE:
-        ui->pbAvm->setDisabled(true);
-        ui->pbPret->setDisabled(true);
-        ui->pbPartez->setDisabled(true);
-        ui->pbArret ->setDisabled(true);
-        break;
-    case DEPART_LANCE:
-        ui->pbPreparation->setEnabled(true);
-        ui->pbAvm->setEnabled(false);
-        ui->pbPret->setEnabled(false);
-        ui->pbPartez->setEnabled(false);
-        ui->pbArret ->setEnabled(false);
-        break;
-    }
-
+    ui->pbPreparation->setEnabled(true);
+    ui->pbAvm->setEnabled(false);
+    ui->pbPret->setEnabled(false);
+    ui->pbPartez->setEnabled(false);
+    ui->pbArret ->setEnabled(false);
 
     memset(&_buttons, 0, sizeof(T_BUTTONS));  // init donnée membre image des boutons
     _zdc->sauveButtons(_buttons); // synchro avec mem partagée
@@ -119,17 +108,13 @@ void CGuiSession::on_pbPreparation_clicked()
     datas.activeSignalisation = true;
     datas.modeDeFonctionnement = RAPIDE;
     _zdc->sauveDatas(datas);
+    emit sig_toWorkerThread(); // ---------------------------------------
 
-    ui->pbAvm->setEnabled(true);
-    emit sig_toWorkerThread();
-    if (_zdc->getControleLocal()) {  // pourrait être la cause d'un renvoi de trame, idem pour les autres boutons.
-        T_BUTTONS buttons;
-        _zdc->getButtons(buttons);
-        memset(&buttons, 0, sizeof(T_BUTTONS));
-        buttons.btnPreparation = 1;
-        _zdc->setButtons(buttons);
-        emit sig_newBtnStateToTablette(buttons);
-    } // if
+    T_BUTTONS buttons;
+    _zdc->getButtons(buttons);
+    memset(&buttons, 0, sizeof(T_BUTTONS));
+    buttons.btnPreparation = 1;
+    _zdc->setButtons(buttons);
 
     switch(_typeCourse) {
     case DEPART_ARRETE:
@@ -141,7 +126,7 @@ void CGuiSession::on_pbPreparation_clicked()
         break;
     case DEPART_LANCE:
         ui->pbPreparation->setEnabled(false);
-        ui->pbAvm->setEnabled(false);
+//        ui->pbAvm->setEnabled(false);
         ui->pbPartez->setEnabled(true);
         ui->pbArret->setEnabled(true);
         break;
@@ -238,8 +223,7 @@ void CGuiSession::on_pbArret_clicked()
         msgBox.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
         msgBox.setDefaultButton(QMessageBox::No);
         int reponse = msgBox.exec();
-        if(reponse == QMessageBox::Yes)
-        {
+        if(reponse == QMessageBox::Yes) {
             _zdc->getDatas(datas);
             datas.activeSignalisation = false;
             datas.modeDeFonctionnement = ETEINT;

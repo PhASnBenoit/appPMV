@@ -1,4 +1,3 @@
-//#include "cihm.h"
 #include "capp.h"
 #include <QApplication>
 
