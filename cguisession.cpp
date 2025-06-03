@@ -407,10 +407,10 @@ void CGuiSession::on_afficherCourse(int noCourse)
     // si les deux coureurs sont arrivés
     if (_zdc->getCoureurArrived(noCourse, 0) && _zdc->getCoureurArrived(noCourse, 1)) {
         ui->pbPreparation->setEnabled(true);
-        ui->pbAvm->setDisabled(true);
-        ui->pbPret->setDisabled(true);
-        ui->pbPartez->setDisabled(true);
-        ui->pbArret->setDisabled(true);
+        ui->pbAvm->setEnabled(false);
+        ui->pbPret->setEnabled(false);
+        ui->pbPartez->setEnabled(false);
+        ui->pbArret->setEnabled(false);
         ui->pbLeft->setEnabled(true);
         ui->pbRight->setEnabled(true);
     }

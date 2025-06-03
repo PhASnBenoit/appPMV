@@ -26,7 +26,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
-    cformatjson.cpp \
     cgiroanemometre.cpp \
     cguilogin.cpp \
     cguisession.cpp \
@@ -42,7 +41,6 @@ SOURCES += \
     biblis/ci2c.cpp
 
 HEADERS += \
-    cformatjson.h \
     cgiroanemometre.h \
     cguilogin.h \
     cguisession.h \
