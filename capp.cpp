@@ -303,6 +303,7 @@ void CApp::on_newSession(QString nomSession) //-- 2024
     delete _uiSession;
     creerSession(nomSession);
     creerUiSession();
+    connect(_uiSession, &CGuiSession::sig_toWorkerThread, _sign, &CSignalisation::on_goTravail);
 }
 
 void CApp::on_endSession() //-- 2024
