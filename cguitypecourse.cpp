@@ -1,12 +1,15 @@
 #include "cguitypecourse.h"
 #include "ui_cguitypecourse.h"
 
-CGuiTypeCourse::CGuiTypeCourse(QWidget *parent, T_TYPE_COURSE *type) :
+CGuiTypeCourse::CGuiTypeCourse(QWidget *parent, T_TYPE_COURSE *type,
+                               uint *longCourseDL, uint *longCourseDA) :
     QDialog(parent),
     ui(new Ui::CGuiTypeCourse)
 {
     ui->setupUi(this);
     _type = type;
+    _longCourseDA = *longCourseDA;
+    _longCourseDL = *longCourseDL;
 }
 
 CGuiTypeCourse::~CGuiTypeCourse()

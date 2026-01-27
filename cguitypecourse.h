@@ -13,7 +13,7 @@ class CGuiTypeCourse : public QDialog
     Q_OBJECT
 
 public:
-    explicit CGuiTypeCourse(QWidget *parent = nullptr, T_TYPE_COURSE *type = nullptr);
+    explicit CGuiTypeCourse(QWidget *parent = nullptr, T_TYPE_COURSE *type = nullptr, uint *longCourseDL=nullptr, uint *longCourseDA=nullptr);
     ~CGuiTypeCourse();
 
 private slots:
@@ -23,6 +23,7 @@ private slots:
 private:
     Ui::CGuiTypeCourse *ui;
     T_TYPE_COURSE *_type;
+    uint _longCourseDA, _longCourseDL;
 };
 
 #endif // CGUITYPECOURSE_H

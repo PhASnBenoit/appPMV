@@ -110,7 +110,7 @@ qint64 CApp::calculerDeltaT(QDateTime t1, QDateTime t2) //-- 2024
 float CApp::calculerVitesse(float tms) //-- 2024
 {
     float vitesse;
-    vitesse = ((_typeCourse==DEPART_ARRETE?50.0:10.0)/(tms/1000))*3.6;  // km/h
+    vitesse = ((_typeCourse==DEPART_ARRETE?_longCourseDA:_longCourseDL)/(tms/1000))*3.6;  // km/h
     return vitesse;
 }
 
@@ -125,7 +125,7 @@ void CApp::creerSession(QString nomSession) //-- 2024
 
     // Choix du type de courses
     _typeCourse=DEPART_ARRETE;  // par défaut 2 coureurs
-    _uiTypeCourse = new CGuiTypeCourse(nullptr, &_typeCourse);
+    _uiTypeCourse = new CGuiTypeCourse(nullptr, &_typeCourse, &_longCourseDL, &_longCourseDA);
 //        connect(_uiTypeCourse, &CGuiTypeCourse::finished, this, &CApp::on_exit);
     _uiTypeCourse->exec(); //------------------------------------------------IHM
     delete _uiTypeCourse;

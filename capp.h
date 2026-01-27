@@ -46,6 +46,7 @@ private:
     QThread *_thGiroAne;
 
     T_TYPE_COURSE _typeCourse; //--- 2024
+    uint _longCourseDA, _longCourseDL;  // --- 2025
     T_PARAMSESSION _paramSession; //--- 2024
     QList<T_2COUREURS> _courses; //--- 2024
     QDateTime _td, _t1, _t2; //--- 2024
